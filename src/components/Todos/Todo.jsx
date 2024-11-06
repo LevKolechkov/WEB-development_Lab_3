@@ -3,19 +3,24 @@ import shareIcon from "../../assets/images/menu/share.svg";
 import infoIcon from "../../assets/images/menu/info.svg";
 import editIcon from "../../assets/images/menu/edit.svg";
 
-function Todo(props) {
-  const { id, title, about } = props;
-
+function Todo({ task, deleteTask, toggleTodo }) {
   return (
     <li className="task">
-      <div className="container">
+      <div className="container" onClick={() => toggleTodo(task.id)}>
         <div className="container__text">
-          <h1>{title}</h1>
-          <h2>{about}</h2>
+          <h1>{task.title}</h1>
+          <h2>{task.about}</h2>
         </div>
-        <button>x</button>
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            deleteTask(task.id);
+          }}
+        >
+          x
+        </button>
       </div>
-      <div className="menu visible">
+      <div className={`menu${task.isMenuOpened ? " visible" : ""}`}>
         <button>
           <img src={shareIcon} alt="share" />
         </button>

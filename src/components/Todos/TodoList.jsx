@@ -1,9 +1,16 @@
 import Todo from "./Todo";
 
-function TodoList() {
+function TodoList({ tasks, deleteTask, toggleTodo }) {
   return (
     <ul id="taskList">
-      <Todo id={1} title={`Title`} about={`About`} />
+      {tasks.map((task) => (
+        <Todo
+          key={task.id}
+          task={task}
+          deleteTask={deleteTask}
+          toggleTodo={toggleTodo}
+        />
+      ))}
     </ul>
   );
 }
