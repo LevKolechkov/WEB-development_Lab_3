@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { DndContext, closestCorners } from "@dnd-kit/core";
 import { v4 as uuidv4 } from "uuid";
 import TodoForm from "./components/TodoForm/TodoForm";
 import "./App.scss";
 import TodoList from "./components/Todos/TodoList";
 import NoTasks from "./components/NoTasks/NoTasks";
+import { arrayMove } from "@dnd-kit/sortable";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -61,6 +63,21 @@ function App() {
     );
   };
 
+  const getTaskPosition = (id) => tasks.findIndex((task) => task.id === id);
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id === over.id) return;
+
+    setTasks((tasks) => {
+      const originalPos = getTaskPosition(active.id);
+      const newPos = getTaskPosition(over.id);
+
+      return arrayMove(tasks, originalPos, newPos);
+    });
+  };
+
   return (
     <div className="App">
       <div className="list">
@@ -68,12 +85,17 @@ function App() {
         {tasks.length === 0 ? (
           <NoTasks />
         ) : (
-          <TodoList
-            tasks={tasks}
-            deleteTask={deleteTodoHandler}
-            toggleTodo={toggleTodoHandler}
-            updateTask={updateTodoHandler}
-          />
+          <DndContext
+            onDragEnd={handleDragEnd}
+            collisionDetection={closestCorners}
+          >
+            <TodoList
+              tasks={tasks}
+              deleteTask={deleteTodoHandler}
+              toggleTodo={toggleTodoHandler}
+              updateTask={updateTodoHandler}
+            />
+          </DndContext>
         )}
       </div>
     </div>

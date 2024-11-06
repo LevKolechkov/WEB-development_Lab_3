@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import "./TodoList.scss";
 import shareIcon from "../../assets/images/menu/share.svg";
 import infoIcon from "../../assets/images/menu/info.svg";
@@ -7,6 +9,12 @@ import ConfirmDelete from "../Confirm/ConfirmDelete";
 import ConfirmEdit from "../Confirm/ConfirmEdit";
 
 function Todo({ task, deleteTask, toggleTodo, updateTask }) {
+  const taskId = task.id;
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: taskId });
+
+  const style = { transition, transform: CSS.Transform.toString(transform) };
+
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showConfirmEdit, setShowConfirmEdit] = useState(false);
 
@@ -37,37 +45,45 @@ function Todo({ task, deleteTask, toggleTodo, updateTask }) {
   };
 
   return (
-    <li className="task">
-      <div className="container" onClick={() => toggleTodo(task.id)}>
-        <div className="container__text">
-          <h1>{task.title}</h1>
-          <h2>{task.about}</h2>
+    <>
+      <li
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        style={style}
+        className="task"
+      >
+        <div className="container" onClick={() => toggleTodo(task.id)}>
+          <div className="container__text">
+            <h1>{task.title}</h1>
+            <h2>{task.about}</h2>
+          </div>
+          <button
+            onClick={(event) => {
+              event.stopPropagation();
+              handleDeleteClick();
+            }}
+          >
+            x
+          </button>
         </div>
-        <button
-          onClick={(event) => {
-            event.stopPropagation();
-            handleDeleteClick();
-          }}
-        >
-          x
-        </button>
-      </div>
-      <div className={`menu${task.isMenuOpened ? " visible" : ""}`}>
-        <button>
-          <img src={shareIcon} alt="share" />
-        </button>
-        <button>
-          <img src={infoIcon} alt="info" />
-        </button>
-        <button
-          onClick={(event) => {
-            event.stopPropagation();
-            handleEditClick();
-          }}
-        >
-          <img src={editIcon} alt="edit" />
-        </button>
-      </div>
+        <div className={`menu${task.isMenuOpened ? " visible" : ""}`}>
+          <button>
+            <img src={shareIcon} alt="share" />
+          </button>
+          <button>
+            <img src={infoIcon} alt="info" />
+          </button>
+          <button
+            onClick={(event) => {
+              event.stopPropagation();
+              handleEditClick();
+            }}
+          >
+            <img src={editIcon} alt="edit" />
+          </button>
+        </div>
+      </li>
       <ConfirmDelete
         show={showConfirmDelete}
         onConfirm={handleConfirmDelete}
@@ -79,7 +95,7 @@ function Todo({ task, deleteTask, toggleTodo, updateTask }) {
         onSave={handleSaveEdit}
         onCancel={handleCancelEdit}
       />
-    </li>
+    </>
   );
 }
 
