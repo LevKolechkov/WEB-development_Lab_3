@@ -56,15 +56,15 @@ function Todo({ task, deleteTask, toggleTodo, updateTask }) {
 
   return (
     <>
-      <li
-        ref={setNodeRef}
-        {...attributes}
-        {...listeners}
-        style={style}
-        className="task"
-      >
+      <li style={style} className="task">
         <div className="container" onClick={() => toggleTodo(task.id)}>
           <div className="container__text">
+            <div
+              className="dragable"
+              {...attributes}
+              {...listeners}
+              ref={setNodeRef}
+            ></div>
             <h1>{task.title}</h1>
             <h2>{task.about}</h2>
           </div>

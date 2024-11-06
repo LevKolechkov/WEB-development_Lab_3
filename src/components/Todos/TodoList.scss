@@ -79,6 +79,16 @@ ul {
         display: flex;
         flex-direction: column;
         width: 80%;
+        position: relative;
+
+        .dragable {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          position: absolute;
+        }
 
         @media (max-width: 450px) {
           width: 70%;
