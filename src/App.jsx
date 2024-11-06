@@ -9,23 +9,23 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   const addNewTask = (newTask) => {
-    // TODO:
-    // Работа с localStorage
-
     setTasks([...tasks, newTask]);
   };
 
   const deleteTask = (id) => {
-    // TODO:
-    // Работа с localStorage
-
-    setTasks(tasks.filter((task) => task.id !== id));
+    const tasksWithDeletedTask = tasks.filter((task) => task.id !== id);
+    setTasks(tasksWithDeletedTask);
   };
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    storedTasks.forEach((task) => (task.isMenuOpened = false));
     setTasks(storedTasks);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTodoHandler = ({ title, about }) => {
     const newTask = {
