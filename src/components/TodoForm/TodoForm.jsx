@@ -1,6 +1,6 @@
-import "./Todo.scss";
+import "./TodoForm.scss";
 
-function Todo() {
+function TodoForm() {
   return (
     <div className="set-task">
       <div className="set-task__input">
@@ -12,4 +12,4 @@ function Todo() {
   );
 }
 
-export default Todo;
+export default TodoForm;

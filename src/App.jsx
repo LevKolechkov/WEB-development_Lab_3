@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import Todo from "./components/Todo/Todo";
+import TodoForm from "./components/TodoForm/TodoForm";
 import "./App.scss";
+import TodoList from "./components/Todos/TodoList";
 import NoTasks from "./components/NoTasks/NoTasks";
 
 function App() {
@@ -16,8 +17,9 @@ function App() {
   return (
     <div className="App">
       <div className="list">
-        <Todo />
-        {tasks.length === 0 ? <NoTasks /> : {}}
+        <TodoForm />
+        {/* {tasks.length === 0 ? <NoTasks /> : {}} */}
+        <TodoList />
       </div>
     </div>
   );
