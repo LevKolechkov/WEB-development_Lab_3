@@ -1,3 +1,8 @@
+import "./TodoList.scss";
+import shareIcon from "../../assets/images/menu/share.svg";
+import infoIcon from "../../assets/images/menu/info.svg";
+import editIcon from "../../assets/images/menu/edit.svg";
+
 function Todo(props) {
   const { id, title, about } = props;
 
@@ -10,11 +15,15 @@ function Todo(props) {
         </div>
         <button>x</button>
       </div>
-      <div className="menu">
+      <div className="menu visible">
         <button>
-          <img src="" alt="share" />
-          <img src="" alt="info" />
-          <img src="" alt="edit" />
+          <img src={shareIcon} alt="share" />
+        </button>
+        <button>
+          <img src={infoIcon} alt="info" />
+        </button>
+        <button>
+          <img src={editIcon} alt="edit" />
         </button>
       </div>
     </li>

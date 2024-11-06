@@ -1,5 +1,4 @@
 import Todo from "./Todo";
-import "./TodoList.scss";
 
 function TodoList() {
   return (
