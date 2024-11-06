@@ -55,12 +55,15 @@ function App() {
     <div className="App">
       <div className="list">
         <TodoForm addTask={addTodoHandler} />
-        {/* {tasks.length === 0 ? <NoTasks /> : <TodoList />} */}
-        <TodoList
-          tasks={tasks}
-          deleteTask={deleteTodoHandler}
-          toggleTodo={toggleTodoHandler}
-        />
+        {tasks.length === 0 ? (
+          <NoTasks />
+        ) : (
+          <TodoList
+            tasks={tasks}
+            deleteTask={deleteTodoHandler}
+            toggleTodo={toggleTodoHandler}
+          />
+        )}
       </div>
     </div>
   );

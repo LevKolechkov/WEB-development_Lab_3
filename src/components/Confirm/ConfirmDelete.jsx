@@ -1,4 +1,4 @@
-import "./Overlay.scss";
+import "./Confirm.scss";
 
 function ConfirmDelete({ show, onConfirm, onCancel }) {
   if (!show) return null;
