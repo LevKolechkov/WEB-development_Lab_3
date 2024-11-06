@@ -7,6 +7,7 @@ import infoIcon from "../../assets/images/menu/info.svg";
 import editIcon from "../../assets/images/menu/edit.svg";
 import ConfirmDelete from "../Confirm/ConfirmDelete";
 import ConfirmEdit from "../Confirm/ConfirmEdit";
+import Share from "../Share/Share";
 
 function Todo({ task, deleteTask, toggleTodo, updateTask }) {
   const taskId = task.id;
@@ -17,6 +18,7 @@ function Todo({ task, deleteTask, toggleTodo, updateTask }) {
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showConfirmEdit, setShowConfirmEdit] = useState(false);
+  const [showShareMenu, setShowShare] = useState(false);
 
   const handleDeleteClick = () => {
     setShowConfirmDelete(true);
@@ -44,6 +46,14 @@ function Todo({ task, deleteTask, toggleTodo, updateTask }) {
     setShowConfirmEdit(false);
   };
 
+  const handleShareClick = () => {
+    setShowShare(true);
+  };
+
+  const handleShareCancel = () => {
+    setShowShare(false);
+  };
+
   return (
     <>
       <li
@@ -69,7 +79,14 @@ function Todo({ task, deleteTask, toggleTodo, updateTask }) {
         </div>
         <div className={`menu${task.isMenuOpened ? " visible" : ""}`}>
           <button>
-            <img src={shareIcon} alt="share" />
+            <img
+              src={shareIcon}
+              alt="share"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleShareClick();
+              }}
+            />
           </button>
           <button>
             <img src={infoIcon} alt="info" />
@@ -95,6 +112,7 @@ function Todo({ task, deleteTask, toggleTodo, updateTask }) {
         onSave={handleSaveEdit}
         onCancel={handleCancelEdit}
       />
+      <Share show={showShareMenu} onCancel={handleShareCancel} />
     </>
   );
 }
