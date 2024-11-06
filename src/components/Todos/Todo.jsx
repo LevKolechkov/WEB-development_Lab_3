@@ -4,12 +4,18 @@ import shareIcon from "../../assets/images/menu/share.svg";
 import infoIcon from "../../assets/images/menu/info.svg";
 import editIcon from "../../assets/images/menu/edit.svg";
 import ConfirmDelete from "../Confirm/ConfirmDelete";
+import ConfirmEdit from "../Confirm/ConfirmEdit";
 
-function Todo({ task, deleteTask, toggleTodo }) {
+function Todo({ task, deleteTask, toggleTodo, updateTask }) {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showConfirmEdit, setShowConfirmEdit] = useState(false);
 
   const handleDeleteClick = () => {
     setShowConfirmDelete(true);
+  };
+
+  const handleEditClick = () => {
+    setShowConfirmEdit(true);
   };
 
   const handleConfirmDelete = () => {
@@ -19,6 +25,15 @@ function Todo({ task, deleteTask, toggleTodo }) {
 
   const handleCancelDelete = () => {
     setShowConfirmDelete(false);
+  };
+
+  const handleSaveEdit = (editedTask) => {
+    updateTask(task.id, editedTask);
+    setShowConfirmEdit(false);
+  };
+
+  const handleCancelEdit = () => {
+    setShowConfirmEdit(false);
   };
 
   return (
@@ -44,7 +59,12 @@ function Todo({ task, deleteTask, toggleTodo }) {
         <button>
           <img src={infoIcon} alt="info" />
         </button>
-        <button>
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            handleEditClick();
+          }}
+        >
           <img src={editIcon} alt="edit" />
         </button>
       </div>
@@ -52,6 +72,12 @@ function Todo({ task, deleteTask, toggleTodo }) {
         show={showConfirmDelete}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
+      />
+      <ConfirmEdit
+        show={showConfirmEdit}
+        task={task}
+        onSave={handleSaveEdit}
+        onCancel={handleCancelEdit}
       />
     </li>
   );

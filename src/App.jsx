@@ -51,6 +51,16 @@ function App() {
     );
   };
 
+  const updateTodoHandler = (id, changedTask) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id
+          ? { ...task, title: changedTask.title, about: changedTask.about }
+          : { ...task }
+      )
+    );
+  };
+
   return (
     <div className="App">
       <div className="list">
@@ -62,6 +72,7 @@ function App() {
             tasks={tasks}
             deleteTask={deleteTodoHandler}
             toggleTodo={toggleTodoHandler}
+            updateTask={updateTodoHandler}
           />
         )}
       </div>
