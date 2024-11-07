@@ -74,6 +74,7 @@ ul {
       justify-content: space-between;
       color: #f0e3ca;
       font-family: "Roboto", sans-serif;
+      cursor: pointer;
 
       &__text {
         display: flex;
@@ -88,6 +89,7 @@ ul {
           height: 100%;
           width: 100%;
           position: absolute;
+          cursor: grab;
         }
 
         @media (max-width: 450px) {
